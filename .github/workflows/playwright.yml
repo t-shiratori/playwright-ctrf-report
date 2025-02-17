@@ -1,27 +1,70 @@
-name: Playwright Tests
+name: PLAYWRIGHT-TESTS
 on:
+  workflow_dispatch:
+    inputs:
+      path:
+        description: "Path to test files (e.g. 'a/b/') "
+        required: false
+        default: "/"
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
 jobs:
-  test:
+  e2e-test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm install -g pnpm && pnpm install
-    - name: Install Playwright Browsers
-      run: pnpm exec playwright install --with-deps
-    - name: Run Playwright tests
-      run: pnpm exec playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm install -g pnpm && pnpm install
+
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: pnpm e2e
+
+      - name: Upload test results html
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: output-e2e-html
+          path: playwright-report/html/
+          retention-days: 3
+
+      - name: Upload test results json
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: output-e2e-json
+          path: playwright-report/json/
+          retention-days: 3
+
+      - name: Upload test results ctrf
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: output-e2e-ctrf
+          path: playwright-report/ctrf/
+          retention-days: 3
+
+      - name: Publish CTRF Report
+        uses: ctrf-io/github-test-reporter@v1
+        if: ${{ !cancelled() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          report-path: "playwright-report/ctrf/*.json"
+          failed-report: true
+          failed-folded-report: true
+          fail-rate-report: true
+          flaky-rate-report: true
+          previous-results-max: 10
+          previous-results-report: true
+          #pull-request-report: true
