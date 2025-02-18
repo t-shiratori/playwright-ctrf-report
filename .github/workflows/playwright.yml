@@ -5,7 +5,7 @@ on:
       path:
         description: "Path to test files (e.g. 'a/b/') "
         required: false
-        default: "/"
+        default: '/'
   push:
     branches: [main, master]
   pull_request:
@@ -26,9 +26,12 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
-      
+
       - name: Install dependencies
         run: pnpm install
+
+      - name: Copy Dist playwright-ctrf-json-reporter
+        run: pnpm copy:dist
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
@@ -74,7 +77,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          report-path: "playwright-report/ctrf/*.json"
+          report-path: 'playwright-report/ctrf/*.json'
           failed-report: true
           failed-folded-report: true
           fail-rate-report: true
