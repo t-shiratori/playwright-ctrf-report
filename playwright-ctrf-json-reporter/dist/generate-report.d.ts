@@ -47,6 +47,7 @@ declare class GenerateCtrfReport implements Reporter {
     extractTagsFromTitle(title: string): string[];
     extractScreenshotBase64(testResult: TestResult): string | undefined;
     extractFailureDetails(testResult: TestResult): Partial<CtrfTest>;
+    addSnippet(text: string, snippet: string | undefined): string;
     countSuites(suite: Suite): number;
     writeReportToFile(data: CtrfReport): void;
     processStep(test: CtrfTest, step: TestStep): void;
