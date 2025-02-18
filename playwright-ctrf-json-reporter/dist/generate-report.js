@@ -267,7 +267,7 @@ class GenerateCtrfReport {
             if (testResult.error.message !== undefined) {
                 failureDetails.message = testResult.error.message;
                 if (testResult.error.snippet !== undefined) {
-                    failureDetails.message += testResult.error.snippet;
+                    failureDetails.message += '\n' + testResult.error.snippet;
                 }
             }
             if (testResult.error.stack !== undefined) {
