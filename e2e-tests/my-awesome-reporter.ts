@@ -32,7 +32,12 @@ class MyReporter implements Reporter {
       `[my-awesome-reporter] Finished test ${test.title}: ${result.status}`
     );
     console.log(`[my-awesome-reporter] Snippet : ${result?.error?.snippet}`);
-    console.log(`[my-awesome-reporter] Message : ${result?.error?.message}`);
+    console.log(
+      `[my-awesome-reporter] error message : ${result?.error?.message}`
+    );
+    console.log(
+      `[my-awesome-reporter] error[0] message : ${result?.errors?.[0]}`
+    );
   }
 
   onStdErr(chunk: Buffer, test: TestCase, result: TestResult) {
