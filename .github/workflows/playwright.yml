@@ -60,6 +60,14 @@ jobs:
           path: playwright-report/ctrf/
           retention-days: 3
 
+      - name: Upload test results my-awesome-reporter
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: output-e2e-my-awesome-reporter
+          path: playwright-report/my-awesome-reporter/
+          retention-days: 3
+
       - name: Publish CTRF Report
         uses: ctrf-io/github-test-reporter@v1
         if: ${{ !cancelled() }}

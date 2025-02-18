@@ -32,6 +32,13 @@ export default defineConfig({
       "playwright-ctrf-json-reporter",
       { outputDir: "playwright-report/ctrf", outputFile: "index.json" },
     ],
+    [
+      "./e2e-tests/my-awesome-reporter.ts",
+      {
+        customOption: "some value",
+        outputFile: "playwright-report/my-awesome-reporter/index.json",
+      },
+    ],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
