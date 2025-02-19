@@ -36,7 +36,7 @@ class MyReporter implements Reporter {
       `[my-awesome-reporter] error message : ${result?.error?.message}`
     );
     console.log(
-      `[my-awesome-reporter] error[0] message : ${result?.errors?.[0]}`
+      `[my-awesome-reporter] errors[0] message : ${result?.errors?.[0].message}`
     );
   }
 
