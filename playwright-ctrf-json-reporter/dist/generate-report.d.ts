@@ -1,0 +1,55 @@
+import { type Suite, type Reporter, type TestCase, type TestResult, type FullConfig, type TestStep } from '@playwright/test/reporter';
+import { type CtrfTestState, type CtrfReport, type CtrfTest, type CtrfEnvironment } from '../types/ctrf';
+interface ReporterConfigOptions {
+    outputFile?: string;
+    outputDir?: string;
+    minimal?: boolean;
+    screenshot?: boolean;
+    annotations?: boolean;
+    testType?: string;
+    appName?: string | undefined;
+    appVersion?: string | undefined;
+    osPlatform?: string | undefined;
+    osRelease?: string | undefined;
+    osVersion?: string | undefined;
+    buildName?: string | undefined;
+    buildNumber?: string | undefined;
+    buildUrl?: string | undefined;
+    repositoryName?: string | undefined;
+    repositoryUrl?: string | undefined;
+    branchName?: string | undefined;
+    testEnvironment?: string | undefined;
+}
+declare class GenerateCtrfReport implements Reporter {
+    readonly ctrfReport: CtrfReport;
+    readonly ctrfEnvironment: CtrfEnvironment;
+    readonly reporterConfigOptions: ReporterConfigOptions;
+    readonly reporterName = "playwright-ctrf-json-reporter";
+    readonly defaultOutputFile = "ctrf-report.json";
+    readonly defaultOutputDir = "ctrf";
+    private suite;
+    private startTime;
+    constructor(config?: Partial<ReporterConfigOptions>);
+    onBegin(_config: FullConfig, suite: Suite): void;
+    onEnd(): void;
+    processSuite(suite: Suite): void;
+    processTest(testCase: TestCase): void;
+    setFilename(filename: string): void;
+    updateCtrfTestResultsFromTestResult(testCase: TestCase, testResult: TestResult, ctrfReport: CtrfReport): void;
+    updateSummaryFromTestResult(testResult: TestResult, ctrfReport: CtrfReport): void;
+    mapPlaywrightStatusToCtrf(testStatus: string): CtrfTestState;
+    setEnvironmentDetails(reporterConfigOptions: ReporterConfigOptions): void;
+    hasEnvironmentDetails(environment: CtrfEnvironment): boolean;
+    extractMetadata(testResult: TestResult): any;
+    updateStart(startTime: Date): number;
+    calculateStopTime(startTime: Date, duration: number): number;
+    buildSuitePath(test: TestCase): string;
+    extractTagsFromTitle(title: string): string[];
+    extractScreenshotBase64(testResult: TestResult): string | undefined;
+    extractFailureDetails(testResult: TestResult): Partial<CtrfTest>;
+    addSnippet(text: string, snippet: string | undefined): string;
+    countSuites(suite: Suite): number;
+    writeReportToFile(data: CtrfReport): void;
+    processStep(test: CtrfTest, step: TestStep): void;
+}
+export default GenerateCtrfReport;

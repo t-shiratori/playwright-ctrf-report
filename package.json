@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "copy:dist": "rm -rf node_modules/playwright-ctrf-json-reporter/dist && cp -r playwright-ctrf-json-reporter/dist node_modules/playwright-ctrf-json-reporter/dist"
   },
   "dependencies": {
     "next": "15.1.7",
