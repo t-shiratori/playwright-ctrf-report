@@ -30,8 +30,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Copy Dist playwright-ctrf-json-reporter
-        run: pnpm copy:dist
+      # - name: Copy Dist playwright-ctrf-json-reporter
+      #   run: pnpm copy:dist
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
@@ -39,49 +39,49 @@ jobs:
       - name: Run Playwright tests
         run: pnpm e2e
 
-      - name: Upload test results html
-        uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: output-e2e-html
-          path: playwright-report/html/
-          retention-days: 3
+      # - name: Upload test results html
+      #   uses: actions/upload-artifact@v4
+      #   if: ${{ !cancelled() }}
+      #   with:
+      #     name: output-e2e-html
+      #     path: playwright-report/html/
+      #     retention-days: 3
 
-      - name: Upload test results json
-        uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: output-e2e-json
-          path: playwright-report/json/
-          retention-days: 3
+      # - name: Upload test results json
+      #   uses: actions/upload-artifact@v4
+      #   if: ${{ !cancelled() }}
+      #   with:
+      #     name: output-e2e-json
+      #     path: playwright-report/json/
+      #     retention-days: 3
 
-      - name: Upload test results ctrf
-        uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: output-e2e-ctrf
-          path: playwright-report/ctrf/
-          retention-days: 3
+      # - name: Upload test results ctrf
+      #   uses: actions/upload-artifact@v4
+      #   if: ${{ !cancelled() }}
+      #   with:
+      #     name: output-e2e-ctrf
+      #     path: playwright-report/ctrf/
+      #     retention-days: 3
 
-      - name: Upload test results my-awesome-reporter
-        uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: output-e2e-my-awesome-reporter
-          path: playwright-report/my-awesome-reporter/
-          retention-days: 3
+      # - name: Upload test results my-awesome-reporter
+      #   uses: actions/upload-artifact@v4
+      #   if: ${{ !cancelled() }}
+      #   with:
+      #     name: output-e2e-my-awesome-reporter
+      #     path: playwright-report/my-awesome-reporter/
+      #     retention-days: 3
 
-      - name: Publish CTRF Report
-        uses: ctrf-io/github-test-reporter@v1
-        if: ${{ !cancelled() }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          report-path: 'playwright-report/ctrf/*.json'
-          failed-report: true
-          failed-folded-report: true
-          fail-rate-report: true
-          flaky-rate-report: true
-          previous-results-max: 10
-          previous-results-report: true
-          #pull-request-report: true
+      # - name: Publish CTRF Report
+      #   uses: ctrf-io/github-test-reporter@v1
+      #   if: ${{ !cancelled() }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     report-path: 'playwright-report/ctrf/*.json'
+      #     failed-report: true
+      #     failed-folded-report: true
+      #     fail-rate-report: true
+      #     flaky-rate-report: true
+      #     previous-results-max: 10
+      #     previous-results-report: true
+      #pull-request-report: true
