@@ -25,7 +25,7 @@ export default defineConfig({
   //reporter: [['list'], ['json', { outputFile: './playwright-report/results.json' }], ['html', { outputFolder: 'playwright-report' }]],
   reporter: [
     // ['list'],
-    // ["json", { outputFile: "playwright-report/json/index.json" }],
+    ['json', { outputFile: 'playwright-report/json/index.json' }],
     // ["html", { outputFolder: "playwright-report/html/" }],
     // ["allure-playwright"],
     // [
