@@ -30,8 +30,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      # - name: Copy Dist playwright-ctrf-json-reporter
-      #   run: pnpm copy:dist
+      - name: Copy Dist playwright-ctrf-json-reporter
+        run: pnpm copy:dist
 
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
@@ -71,17 +71,17 @@ jobs:
       #     path: playwright-report/my-awesome-reporter/
       #     retention-days: 3
 
-      # - name: Publish CTRF Report
-      #   uses: ctrf-io/github-test-reporter@v1
-      #   if: ${{ !cancelled() }}
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     report-path: 'playwright-report/ctrf/*.json'
-      #     failed-report: true
-      #     failed-folded-report: true
-      #     fail-rate-report: true
-      #     flaky-rate-report: true
-      #     previous-results-max: 10
-      #     previous-results-report: true
+      - name: Publish CTRF Report
+        uses: ctrf-io/github-test-reporter@v1
+        if: ${{ !cancelled() }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          report-path: 'playwright-report/ctrf/*.json'
+          failed-report: true
+          failed-folded-report: true
+          fail-rate-report: true
+          flaky-rate-report: true
+          previous-results-max: 10
+          previous-results-report: true
       #pull-request-report: true
