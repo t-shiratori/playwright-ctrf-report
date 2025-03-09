@@ -24,14 +24,14 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   //reporter: [['list'], ['json', { outputFile: './playwright-report/results.json' }], ['html', { outputFolder: 'playwright-report' }]],
   reporter: [
-    // ['list'],
-    ['json', { outputFile: 'playwright-report/json/index.json' }],
-    // ["html", { outputFolder: "playwright-report/html/" }],
+    ['list'],
+    // ['json', { outputFile: 'playwright-report/json/index.json' }],
+    //['html', { outputFolder: 'playwright-report/html/' }],
     // ["allure-playwright"],
-    // [
-    //   "playwright-ctrf-json-reporter",
-    //   { outputDir: "playwright-report/ctrf", outputFile: "index.json" },
-    // ],
+    [
+      'playwright-ctrf-json-reporter',
+      { outputDir: 'playwright-report/ctrf', outputFile: 'index.json' },
+    ],
     // [
     //   "./e2e-tests/my-awesome-reporter.ts",
     //   {

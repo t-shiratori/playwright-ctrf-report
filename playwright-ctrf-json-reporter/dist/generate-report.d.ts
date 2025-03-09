@@ -1,4 +1,4 @@
-import { type Suite, type Reporter, type TestCase, type TestResult, type FullConfig, type TestStep } from '@playwright/test/reporter';
+import { type Suite, type Reporter, type TestCase, type TestResult, type FullConfig, type TestStep, type TestError } from '@playwright/test/reporter';
 import { type CtrfTestState, type CtrfReport, type CtrfTest, type CtrfEnvironment } from '../types/ctrf';
 interface ReporterConfigOptions {
     outputFile?: string;
@@ -47,7 +47,7 @@ declare class GenerateCtrfReport implements Reporter {
     extractTagsFromTitle(title: string): string[];
     extractScreenshotBase64(testResult: TestResult): string | undefined;
     extractFailureDetails(testResult: TestResult): Partial<CtrfTest>;
-    addSnippet(text: string, snippet: string | undefined): string;
+    formatErrorMessage(text: string, snippet: string | undefined, location: TestError['location']): string;
     countSuites(suite: Suite): number;
     writeReportToFile(data: CtrfReport): void;
     processStep(test: CtrfTest, step: TestStep): void;

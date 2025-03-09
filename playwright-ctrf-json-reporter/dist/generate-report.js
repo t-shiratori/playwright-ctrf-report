@@ -263,23 +263,27 @@ class GenerateCtrfReport {
             testResult.status === 'timedOut' ||
             testResult.status === 'interrupted') &&
             testResult.error !== undefined) {
-            const { message, stack, snippet } = testResult.error;
+            const { message, stack, snippet, location } = testResult.error;
             const failureDetails = {};
             if (message !== undefined) {
-                failureDetails.message = this.addSnippet(message, snippet);
+                failureDetails.message = this.formatErrorMessage(message, snippet, location);
             }
             if (stack !== undefined) {
-                failureDetails.trace = this.addSnippet(stack, snippet);
+                failureDetails.trace = testResult.error.stack;
             }
             return failureDetails;
         }
         return {};
     }
-    addSnippet(text, snippet) {
+    formatErrorMessage(text, snippet, location) {
         if (snippet === undefined) {
             return text;
         }
-        return text + '\n' + snippet;
+        if (location === undefined) {
+            return text + '\n' + snippet;
+        }
+        const locationText = `${location.file}:${location.line}:${location.column}`;
+        return text + '\n' + snippet + '\n' + locationText;
     }
     countSuites(suite) {
         let count = 0;
