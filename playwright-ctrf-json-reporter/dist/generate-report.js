@@ -282,7 +282,7 @@ class GenerateCtrfReport {
         if (location === undefined) {
             return text + '\n' + snippet;
         }
-        const locationText = `${location.file}:${location.line}:${location.column}`;
+        const locationText = ` at ${location.file}:${location.line}:${location.column}`;
         return text + '\n' + snippet + '\n' + locationText;
     }
     countSuites(suite) {
